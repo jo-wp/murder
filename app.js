@@ -4,6 +4,7 @@ var http = require('http');
 var express = require('express'),
     app = module.exports.app = express();
 var each = require('foreach');
+var removeItems = require('remove-array-items');
 
 
 var server = http.createServer(app);
@@ -33,21 +34,26 @@ io.sockets.on('connection', function (socket) {
     });
 
     socket.on('disconnect', function(){
-        //ON EST ICI Virer de users son id et pseudo.
+        each(users, function (value, key, array) {
+            if(value.ID===socket.id){
+                removeItems(users,key,1);
+            }
+        });
     });
 
     socket.on('startchat', function(room,messageRoom){
-        console.log(room+' Message : '+messageRoom);
         socket.broadcast.to(room).emit('msg',messageRoom);
     });
 
    
     function start_session(room){
         socket.on('nickname',function(nickname){
-            socketClientId = socket.id,
+            socketClientId = socket.id;
             users.push({
                 ID:socketClientId,
-                pseudo:nickname
+                pseudo:nickname,
+                cardsMurder:'',
+                cardsObject:''
             });
         });
         socket.on('startGame',function(data){
@@ -61,6 +67,7 @@ io.sockets.on('connection', function (socket) {
 
 
 });
+
 
 
 function refresh_players(room){
@@ -79,9 +86,9 @@ cardsMurder = ['couteau','pistolet','lacé','dynamite','seringue','coussin','voi
 cardsObject = ['foulard','lentille','pull','canette','porte monnaie','clé usb','lunette de soleil'];
 
 function delivery_cards(){
-    //console.log(users);
     each(users, function (value, key, array) {
-        //console.log('Info : '+ value.pseudo);
+       //ON EST ICI FAUT DONNER UNE CARTE MURDER + OBJECT
+
     });
 }
 

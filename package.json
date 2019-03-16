@@ -12,6 +12,7 @@
     "express": "^4.16.4",
     "foreach": "^2.0.5",
     "in-array": "^0.1.2",
+    "remove-array-items": "^2.0.0",
     "socket.io": "^2.2.0",
     "twig": "^1.13.2"
   }
