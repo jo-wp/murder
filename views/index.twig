@@ -1,0 +1,25 @@
+{% extends "statics/base.twig" %}
+{% block title %}Accueil MURDER{% endblock %}
+{% block content %}
+
+    <form action="#" id="create-nickname">
+        <input type="text" name="nickname">
+    </form>
+    <form action="#" id="create-room">
+        <input type="text" name="name-room" id="">
+        <input type="submit" value="Créer la room">
+    </form>
+
+    <form action="#" id="connect-room">
+        <input type="text" name="name-room" id="">
+        <input type="submit" value="Se connecter à une room">
+    </form>
+
+    <h1 class="hidden title-room"></h1>
+    <p class="nb-players"></p>
+    <a href="#" class="refresh-player">start Game</a>
+    <form action="#" id="message-room" class="hidden">
+        <textarea name="message-room" id="" cols="30" rows="10"></textarea>
+        <input type="submit" value="Send">
+    </form>
+{% endblock %}

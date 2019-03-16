@@ -1,0 +1,54 @@
+<script src="/socket.io/socket.io.js"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script>
+    var socket = io.connect('http://192.168.1.33:3000');
+    
+    $('#create-room').submit(function(e){
+        e.preventDefault();
+        
+        nameRoom = $(this).find('input[name="name-room"]').val();
+        var roomCreate =  socket.emit('create', nameRoom);
+        start_session();
+    });
+
+    $('#connect-room').submit(function(e){
+        e.preventDefault();
+        
+        nameRoom = $(this).find('input[name="name-room"]').val();
+        var roomJoin = socket.emit('join', nameRoom);
+
+        start_session();
+
+    });
+
+    $('#message-room').submit(function(e){
+        e.preventDefault();
+        var messageRoom = $(this).find('textarea[name="message-room"]').val();
+        $('#message-room').removeClass('hidden');
+        socket.emit('startchat', nameRoom,messageRoom);
+    });
+
+    $('.refresh-player').click(function(e){
+        e.preventDefault();
+        socket.emit('startGame',1);
+    });
+
+    socket.on('msg', function (message) {
+        alert(message);
+    }); 
+
+    //GAMES
+    function start_session(){
+
+        $('.title-room').removeClass('hidden');
+        $('.title-room').text('Bievenue dans la room '+nameRoom);
+
+        var nickname = $('#create-nickname input[name="nickname"]').val();
+
+        socket.emit('nickname',nickname);
+
+        socket.on('refreshPlayer', function (message) {
+            $('.nb-players').text(message);
+        }); 
+    }
+</script>
